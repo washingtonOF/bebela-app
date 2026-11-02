@@ -1,0 +1,45 @@
+name: BEBELA Android APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Fetch Bebela images from Floot
+        run: |
+          mkdir -p public/_cdn/static
+          for asset in d2cfc6e8-9b4e-4f6f-a43b-9d0f2384fd3f.png 98fa4609-59ba-4853-9db0-f68c30bcb3cc-bebela-avatar-ruiva-curto.png; do
+            curl --fail --location --retry 3 --output "public/_cdn/static/$asset" "https://isamigshop.floot.app/_cdn/static/$asset"
+          done
+      - name: Build web app
+        run: npm run build
+      - name: Add Android project
+        run: npx cap add android
+      - name: Sync Android
+        run: npx cap sync android
+      - name: Build debug APK
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: BEBELA-Android-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
