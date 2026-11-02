@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+:root {
+  /* Overlay layers */
+  --z-overlay: 400;
+  --z-spotlight: 1000; /* Tutorial spotlights/guided help */
+  /* System layers */
+  --z-critical: 2000; /* Critical system notifications */
+  /* spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+}
+:root {
+--background:#faf7ee;--foreground:#263c38;--surface:#eef3e8;--surface-foreground:#263c38;--sidebar:#eef3e8;--sidebar-foreground:#263c38;--card:#fffef9;--card-foreground:#263c38;--popup:#fffef9;--popup-foreground:#263c38;
+--primary:#256650;--primary-foreground:#ffffff;--secondary:#e3eedc;--secondary-foreground:#284737;--accent:#f3c66c;--accent-foreground:#493818;--muted:#edece2;--muted-foreground:#596961;
+--success:#256650;--success-foreground:#ffffff;--error:#a83f3f;--error-foreground:#ffffff;--warning:#e5bb65;--warning-foreground:#493818;--info:#386e89;--info-foreground:#ffffff;--info-hover:#28566f;--info-active:#22475a;--border:#dce3d5;
+--font-family-base:'Nunito',sans-serif;--font-family-display:'Nunito',sans-serif;--font-family-monospace:monospace;--font-family-cursive:cursive;
+--shadow:0 3px 0 #dce3d5;--shadow-md:0 8px 24px #263c380a;--shadow-lg:0 12px 40px #263c3812;--shadow-focus:0 0 0 4px #f3c66c;
+--radius-sm:8px;--radius:16px;--radius-md:20px;--radius-lg:28px;--radius-full:999px;
+--animation-duration-fast:120ms;--animation-duration-normal:220ms;--animation-duration-slow:400ms;
+--chart-color-1:#256650;--chart-color-2:#f3c66c;--chart-color-3:#386e89;--chart-color-4:#a87358;--chart-color-5:#839675;
+}.dark {}
