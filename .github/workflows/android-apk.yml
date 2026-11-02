@@ -27,6 +27,14 @@ jobs:
         run: npx cap add android
       - name: Sync Android
         run: npx cap sync android
+      - name: Set BEBELA Android launcher icon
+        run: |
+          if [ -f public/bebela-icon.png ]; then
+            python3 -m pip install --quiet pillow
+            python3 scripts/create_android_icons.py public/bebela-icon.png android/app/src/main/res
+          else
+            echo "::warning::Ícone BEBELA ausente: envie public/bebela-icon.png ao repositório para substituir o ícone padrão."
+          fi
       - name: Build debug APK
         working-directory: android
         run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
