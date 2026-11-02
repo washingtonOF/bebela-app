@@ -19,12 +19,8 @@ jobs:
           java-version: '21'
       - name: Install dependencies
         run: npm install --no-audit --no-fund
-      - name: Fetch Bebela images from Floot
-        run: |
-          mkdir -p public/_cdn/static
-          for asset in d2cfc6e8-9b4e-4f6f-a43b-9d0f2384fd3f.png 98fa4609-59ba-4853-9db0-f68c30bcb3cc-bebela-avatar-ruiva-curto.png; do
-            curl --fail --location --retry 3 --output "public/_cdn/static/$asset" "https://isamigshop.floot.app/_cdn/static/$asset"
-          done
+      # Imagens hospedadas pelo Floot exigem exportação autorizada.
+      # A compilação de diagnóstico segue sem esses arquivos até a migração dos assets.
       - name: Build web app
         run: npm run build
       - name: Add Android project
