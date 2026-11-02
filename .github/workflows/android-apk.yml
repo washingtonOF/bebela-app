@@ -21,6 +21,11 @@ jobs:
         run: npm install --no-audit --no-fund
       # Imagens hospedadas pelo Floot exigem exportação autorizada.
       # A compilação de diagnóstico segue sem esses arquivos até a migração dos assets.
+      - name: Stage BEBELA visual assets
+        run: |
+          mkdir -p public/_cdn/static
+          cp -v _cdn/static/*.png public/_cdn/static/
+          cp -v bebela-icon.png public/bebela-icon.png
       - name: Build web app
         run: npm run build
       - name: Add Android project
