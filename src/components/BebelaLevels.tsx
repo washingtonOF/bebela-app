@@ -1,3 +1,4 @@
+import { speakText, stopSpeech } from "../helpers/nativeSpeech";
 import React,{useEffect,useMemo,useState} from "react";
 import {Button} from "./Button";
 import {ArrowLeft,Volume2,Star,ArrowRight,Lightbulb} from "lucide-react";
@@ -27,9 +28,9 @@ export function BebelaLevels({level,childName,onBack}:{level:Level;childName:str
 const [tasks,setTasks]=useState<Task[]>(()=>tasksFor(level)),[index,I]=useState(0),[choice,C]=useState<string|null>(null),[tries,T]=useState(0),[hint,H]=useState(false),[tiles,B]=useState<string[]>([]),[stars,S]=useState(0),[audio,A]=useState(""),[records,R]=useState<RecordItem[]>([]);
 const task=tasks[index],finished=index>=tasks.length,assembled=tiles.join(""),answered=choice!==null;
 useEffect(()=>{try{const all=JSON.parse(localStorage.getItem('bebela-learning-v2')||'[]') as RecordItem[];const review=all.filter(r=>r.childName===childName&&r.level===level&&(!r.correct||r.assisted)).slice(-30);if(review.length){const initial=tasksFor(level);const priority=initial.filter(t=>review.some(r=>r.skill===t.kind&&(r.word===t.word||r.word===t.picture||r.word===t.answer)));setTasks([...priority,...initial.filter(t=>!priority.includes(t))].slice(0,10));}}catch{}},[childName,level]);
-useEffect(()=>()=>window.speechSynthesis?.cancel(),[]);
+useEffect(()=>()=>void stopSpeech(),[]);
 useEffect(()=>{if(!finished&&task&&localStorage.getItem('bebela-auto-voice')!=='false'){const timer=window.setTimeout(()=>speak(voice),650);return()=>window.clearTimeout(timer);}},[index,tasks]);
-function speak(t:string){if(!window.speechSynthesis){A("Peça a um adulto para ler a questão.");return;}A("");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=isEnglish()?"en-US":"pt-BR";u.rate=Number(localStorage.getItem('bebela-voice-rate')||'.8');const v=speechSynthesis.getVoices().find(v=>v.lang===(isEnglish()?"en-US":"pt-BR"));if(v)u.voice=v;u.onerror=()=>A("Não foi possível reproduzir o áudio.");speechSynthesis.speak(u);}
+function speak(t:string){A("");void speakText(t,isEnglish()?"en-US":"pt-BR",Number(localStorage.getItem("bebela-voice-rate")||".8")).catch(()=>A("Não foi possível reproduzir o áudio. Verifique a voz instalada no Android."));}
 function record(correct:boolean,attempts:number){const entry:RecordItem={level,date:new Date().toISOString(),correct,assisted:hint||attempts>0,attempts,skill:task.kind,childName,word:task.word||task.picture||task.answer};R(a=>[...a,entry]);try{const prev=JSON.parse(localStorage.getItem("bebela-learning-v2")||"[]");localStorage.setItem("bebela-learning-v2",JSON.stringify([...(Array.isArray(prev)?prev:[]).slice(-299),entry]));}catch{}}
 function success(){C(task.answer);if(tries===0&&!hint)S(n=>n+1);record(true,tries);speak((isEnglish()?"Well done! ":"Muito bem! ")+task.explain);}
 function wrong(){const next=tries+1;T(next);H(true);speak(next===1?(isEnglish()?"Good try. ":"Boa tentativa. ")+task.hint:(isEnglish()?"Let's find out together. ":"Vamos descobrir juntos. ")+task.explain);}
