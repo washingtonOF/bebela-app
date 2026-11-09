@@ -38,11 +38,11 @@ function choose(p:string){say(p.toLowerCase());if(p!==w.parts[built.length]){M("
 function clear(){canvas.current?.getContext("2d")?.clearRect(0,0,600,240);K(false);distance.current=0;}
 useEffect(()=>{clear();},[idx,stage,letter]);
 function point(e:React.PointerEvent<HTMLCanvasElement>){const r=e.currentTarget.getBoundingClientRect();return{x:(e.clientX-r.left)*600/r.width,y:(e.clientY-r.top)*240/r.height};}
-if(!languageChosen)return <BebellaLanguage onSelect={language=>{localStorage.setItem("bebela-language",language);LanguageChosen(true);}}/>;
-if(!childName)return withHome(<BebellaWelcome onStart={name=>{ChildName(name);SelectLevel(0);}}/>);
-if(selectedLevel===0)return withHome(<BebellaLevelSelect childName={childName} onBack={()=>ChildName("")} onParent={()=>SelectLevel(4)} onSelect={level=>{SelectLevel(level);Quick(true);}}/>);
-if(selectedLevel===4)return withHome(<BebellaParent childName={childName} onBack={()=>SelectLevel(0)}/>);
-if(selectedLevel===2||selectedLevel===3||(selectedLevel===1&&localStorage.getItem('bebela-language')==='en-US'))return withHome(<BebellaLevels key={selectedLevel} level={selectedLevel} childName={childName} onBack={()=>SelectLevel(0)}/>);
+if(!languageChosen)return <BebelaLanguage onSelect={language=>{localStorage.setItem("bebela-language",language);LanguageChosen(true);}}/>;
+if(!childName)return withHome(<BebelaWelcome onStart={name=>{ChildName(name);SelectLevel(0);}}/>);
+if(selectedLevel===0)return withHome(<BebelaLevelSelect childName={childName} onBack={()=>ChildName("")} onParent={()=>SelectLevel(4)} onSelect={level=>{SelectLevel(level);Quick(true);}}/>);
+if(selectedLevel===4)return withHome(<BebelaParent childName={childName} onBack={()=>SelectLevel(0)}/>);
+if(selectedLevel===2||selectedLevel===3||(selectedLevel===1&&localStorage.getItem('bebela-language')==='en-US'))return withHome(<BebelaLevels key={selectedLevel} level={selectedLevel} childName={childName} onBack={()=>SelectLevel(0)}/>);
 if(quick)return withHome(<main className={s.app}><QuickWords childName={childName} onChangeName={()=>{ChildName("");SelectLevel(0);}} onWrite={()=>{Quick(false);I(4);change(3);B(true);}}/></main>);
 if(foundation)return withHome(<main className={s.app}><LiteracyPath onExit={()=>Foundation(false)} onFinish={()=>{Foundation(false);I(4);change(0);B(true);}}/></main>);
 return withHome(<main className={s.app}><header className={s.header}><div className={s.brand}><span className={s.logo}><BookOpen/></span><span>Bebella</span></div><div className={s.stars}><Star fill="currentColor" size={20}/> {done.length} estrelas</div></header>
