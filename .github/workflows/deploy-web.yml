@@ -28,6 +28,10 @@ jobs:
           mkdir -p public/_cdn/static
           cp -v _cdn/static/*.png public/_cdn/static/
           cp -v bebela-icon.png public/bebela-icon.png
+      - name: Optimize web images
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 scripts/optimize-web-images.py
       - name: Build site
         env:
           BEBELA_GITHUB_PAGES: 'true'
