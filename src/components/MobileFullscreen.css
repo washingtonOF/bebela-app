@@ -2,9 +2,17 @@
 @media (max-width: 767px) and (pointer: coarse){
   .bebella-mobile-fullscreen{display:flex;align-items:center;gap:5px;position:fixed;top:calc(env(safe-area-inset-top, 0px) + 8px);right:8px;z-index:10001;border:1px solid #ffffffb0;border-radius:999px;background:#256650;color:#fff;padding:7px 11px;font:700 12px system-ui,sans-serif;box-shadow:0 2px 9px #0003;cursor:pointer}
   .bebella-mobile-fullscreen:focus-visible{outline:3px solid #f3c66c;outline-offset:2px}
+  .bebella-mobile-fullscreen--invite{font-weight:900;animation:bebella-fullscreen-pulse 1.8s ease-in-out infinite}
+  .bebella-mobile-fullscreen--exit{top:calc(env(safe-area-inset-top, 0px) + 6px);right:6px;background:#263c38b8;border-color:#ffffff40;box-shadow:none;opacity:.65;padding:5px 8px;font-size:11px;font-weight:500;animation:none}
+  .bebella-mobile-fullscreen--exit:focus-visible,.bebella-mobile-fullscreen--exit:active{opacity:1}
 }
-/* PWA instalado já abre sem barra do navegador; no modo fullscreen via botão,
-   manter Restaurar visível para permitir a saída. */
+@keyframes bebella-fullscreen-pulse{
+  0%,100%{opacity:1;box-shadow:0 2px 9px #0003}
+  50%{opacity:.65;box-shadow:0 0 0 5px #25665025}
+}
+@media (prefers-reduced-motion: reduce){
+  .bebella-mobile-fullscreen--invite{animation:none}
+}
 @media (display-mode: standalone){
   .bebella-mobile-fullscreen{display:none}
 }
