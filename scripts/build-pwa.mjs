@@ -27,9 +27,10 @@ self.addEventListener("activate", event => {
 });
 self.addEventListener("fetch", event => {
   const request = event.request;
-  if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
+  const url = new URL(request.url);
+  if (request.method !== "GET" || url.origin !== self.location.origin || !url.pathname.startsWith("${base}")) return;
   event.respondWith(fetch(request).then(response => {
-    if (response.ok && response.type === \"basic\") {
+    if (response.ok && response.type === "basic") {
       const clone = response.clone();
       caches.open(CACHE).then(cache => cache.put(request, clone));
     }
