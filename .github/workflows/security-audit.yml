@@ -1,0 +1,46 @@
+name: BEBELLA Security Audit
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 8 * * 1'
+permissions:
+  contents: read
+jobs:
+  audit:
+    name: Security and code checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-fund --no-audit
+      - name: Dependency vulnerability report
+        id: audit
+        continue-on-error: true
+        run: |
+          npm audit --json > npm-audit.json
+      - name: Summarize dependency findings
+        if: always()
+        run: |
+          node scripts/security-audit-summary.mjs
+      - name: Check source for risky patterns
+        run: python3 scripts/security-source-check.py
+      - name: Compile application
+        run: npm run build
+      - name: Upload dependency report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bebella-security-audit
+          path: npm-audit.json
+          if-no-files-found: ignore
+          retention-days: 14
