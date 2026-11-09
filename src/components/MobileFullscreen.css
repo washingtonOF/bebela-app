@@ -3,6 +3,8 @@
   .bebella-mobile-fullscreen{display:flex;align-items:center;gap:5px;position:fixed;top:calc(env(safe-area-inset-top, 0px) + 8px);right:8px;z-index:10001;border:1px solid #ffffffb0;border-radius:999px;background:#256650;color:#fff;padding:7px 11px;font:700 12px system-ui,sans-serif;box-shadow:0 2px 9px #0003;cursor:pointer}
   .bebella-mobile-fullscreen:focus-visible{outline:3px solid #f3c66c;outline-offset:2px}
 }
-@media (display-mode: fullscreen), (display-mode: standalone){
+/* PWA instalado já abre sem barra do navegador; no modo fullscreen via botão,
+   manter Restaurar visível para permitir a saída. */
+@media (display-mode: standalone){
   .bebella-mobile-fullscreen{display:none}
 }
