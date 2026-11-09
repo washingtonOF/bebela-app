@@ -1,4 +1,4 @@
-name: BEBELA Web PWA
+name: BEBELLA Web PWA
 on:
   push:
     branches: [main]
