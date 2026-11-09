@@ -13,7 +13,7 @@ function scan(folder) {
   }
 }
 scan(root);
-const sw = `const CACHE = "bebela-pwa-v1";
+const sw = `const CACHE = "bebela-pwa-v2";
 const PRECACHE = ${JSON.stringify(assets)};
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache =>
