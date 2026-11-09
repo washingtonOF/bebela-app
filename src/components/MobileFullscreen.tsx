@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./MobileFullscreen.css";
 
-/** Fullscreen is only requested after a user gesture; unsupported browsers hide the control. */
+/** On mobile, invite fullscreen; once active, offer a quiet way to exit fullscreen. */
 export function MobileFullscreen() {
   const [supported, setSupported] = useState(false);
   const [active, setActive] = useState(false);
@@ -17,13 +17,16 @@ export function MobileFullscreen() {
       if (document.fullscreenElement) await document.exitFullscreen();
       else await document.documentElement.requestFullscreen();
     } catch {
-      // Some mobile browsers disallow fullscreen; leave the page usable.
+      // Unsupported mobile browsers keep the regular page usable.
     }
   }
   if (!supported) return null;
-  return <button type="button" className="bebella-mobile-fullscreen" onClick={toggle}
-    aria-label={active ? "Sair da tela cheia" : "Maximizar tela"}
+  return <button type="button"
+    className={active ? "bebella-mobile-fullscreen bebella-mobile-fullscreen--exit" : "bebella-mobile-fullscreen bebella-mobile-fullscreen--invite"}
+    onClick={toggle}
+    aria-label={active ? "Fechar tela cheia" : "Maximizar tela"}
     title={active ? "Sair da tela cheia" : "Maximizar tela"}>
-    {active ? "⤢" : "⛶"} <span>{active ? "Restaurar" : "Maximizar"}</span>
+    <span aria-hidden="true">{active ? "×" : "⛶"}</span>
+    <span>{active ? "Fechar" : "MAXIMIZAR"}</span>
   </button>;
 }
