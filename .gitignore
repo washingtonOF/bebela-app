@@ -3,3 +3,15 @@ dist/
 android/.gradle/
 android/local.properties
 *.apk
+
+# Segredos e arquivos locais (não publicar)
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.keystore
+*.jks
+*.key
+npm-audit.json
