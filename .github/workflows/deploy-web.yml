@@ -32,6 +32,9 @@ jobs:
           mkdir -p public/_cdn/static
           cp -v _cdn/static/*.png public/_cdn/static/
           cp -v bebela-icon.png public/bebela-icon.png
+          # O PNG da personagem esta na raiz do repositorio.
+          test -s "Menina Artista com Livros Coloridos.png"
+          cp -v "Menina Artista com Livros Coloridos.png" "public/Menina Artista com Livros Coloridos.png"
       - name: Optimize web images
         run: |
           python3 -m pip install --quiet pillow
